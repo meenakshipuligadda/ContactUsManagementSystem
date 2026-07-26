@@ -1,0 +1,104 @@
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.contact-table th {
+  text-align: left;
+  padding: 14px 16px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.contact-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #334155;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background: #f1f5f9;
+}
+
+.action-btn-danger {
+  color: #ef4444;
+  border-color: #fecaca;
+}
+
+.action-btn-danger:hover {
+  background: #fee2e2;
+}
+
+/* Mobile: collapse table into stacked cards, each cell labeled */
+@media (max-width: 640px) {
+  .contact-table {
+    min-width: 0;
+  }
+
+  .contact-table thead {
+    display: none;
+  }
+
+  .contact-table,
+  .contact-table tbody,
+  .contact-table tr,
+  .contact-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .contact-table tr {
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px 4px;
+  }
+
+  .contact-table td {
+    border-bottom: none;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: right;
+  }
+
+  .contact-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #64748b;
+    text-align: left;
+  }
+
+  .actions-cell {
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,43 @@
+.field {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.field-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.field-input:focus {
+  border-color: #2563eb;
+}
+
+.field-input-error {
+  border-color: #ef4444;
+}
+
+textarea.field-input {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.field-error {
+  margin-top: 6px;
+  color: #ef4444;
+  font-size: 13px;
+}

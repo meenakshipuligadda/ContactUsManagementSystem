@@ -1,0 +1,48 @@
+.home {
+  max-width: 480px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.home-icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home h1 {
+  font-size: 34px;
+  color: #1e293b;
+}
+
+.home-subtitle {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+
+.home-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .home {
+    margin: 36px auto;
+  }
+
+  .home h1 {
+    font-size: 26px;
+  }
+}

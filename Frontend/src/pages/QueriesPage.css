@@ -1,0 +1,40 @@
+.queries-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.queries-header h2 {
+  font-size: 24px;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.queries-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.queries-table-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.view-details p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  .queries-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
