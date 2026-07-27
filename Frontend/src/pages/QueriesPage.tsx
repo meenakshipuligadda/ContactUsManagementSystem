@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useContacts } from "../hooks/useContacts";
 import SearchBar from "../components/SearchBar";
 import FilterSection from "../components/FilterSection";
@@ -7,6 +7,7 @@ import ContactTable from "../components/ContactTable";
 import Pagination from "../components/Pagination";
 import Modal from "../components/ui/Modal";
 import Alert from "../components/ui/Alert";
+import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 import EmptyState from "../components/ui/EmptyState";
 import type { Contact } from "../types/contact";
@@ -31,6 +32,7 @@ function QueriesPage() {
     loading,
     error,
     isEmpty,
+    isFiltered,
     handleDelete,
   } = useContacts();
 
@@ -54,24 +56,29 @@ function QueriesPage() {
     setOrder(dir);
   };
 
+  const clearFilters = () => {
+    setSearch("");
+    setDateFilter("");
+  };
+
   const confirmDelete = async () => {
     if (!deleteTarget) return;
     setDeleteError("");
     try {
       await handleDelete(deleteTarget.id);
-      setDeleteSuccess("Contact deleted successfully.");
+      setDeleteSuccess("Query deleted.");
       setDeleteTarget(null);
       setTimeout(() => setDeleteSuccess(""), 2500);
     } catch (err) {
       console.error(err);
-      setDeleteError("Failed to delete. Please try again.");
+      setDeleteError("Couldn't delete that query. Try again.");
     }
   };
 
   return (
     <div className="queries-page">
       <div className="queries-header">
-        <h2>Submitted Queries ({total})</h2>
+        <h2>Submitted queries ({total})</h2>
       </div>
 
       <div className="queries-toolbar">
@@ -94,13 +101,29 @@ function QueriesPage() {
           <Spinner />
         ) : isEmpty ? (
           <EmptyState
-            title="No queries found"
-            subtitle={search || dateFilter ? "Try adjusting your search or filters." : "No one has submitted a message yet."}
+            title={isFiltered ? "No matching queries" : "No queries yet"}
+            subtitle={
+              isFiltered
+                ? "Nothing matches your search and filters."
+                : "Messages sent through the contact form will show up here."
+            }
+            action={
+              isFiltered ? (
+                <Button variant="secondary" onClick={clearFilters}>
+                  Clear search and filters
+                </Button>
+              ) : (
+                <Link to="/contact">
+                  <Button variant="primary">Send a message</Button>
+                </Link>
+              )
+            }
           />
         ) : (
           <>
             <ContactTable
               contacts={contacts}
+              search={search}
               onView={handleView}
               onEdit={handleEdit}
               onDeleteRequest={handleDeleteRequest}
@@ -113,7 +136,7 @@ function QueriesPage() {
       {/* View details modal */}
       <Modal
         isOpen={Boolean(viewingContact)}
-        title="Message Details"
+        title="Message details"
         confirmLabel="Close"
         onConfirm={() => setViewingContact(null)}
         onCancel={() => setViewingContact(null)}
@@ -147,8 +170,8 @@ function QueriesPage() {
       >
         {deleteTarget && (
           <p>
-            Are you sure you want to delete the message from <strong>{deleteTarget.name}</strong>?
-            This can't be undone.
+            The message from <strong>{deleteTarget.name}</strong> will be permanently
+            removed. This can't be undone.
           </p>
         )}
       </Modal>

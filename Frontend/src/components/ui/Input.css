@@ -1,43 +1,56 @@
 .field {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
 .field-label {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
-  color: #334155;
-  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 7px;
 }
 
 .field-input {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--paper);
   font-size: 15px;
-  font-family: inherit;
+  font-family: var(--font-body);
+  color: var(--ink);
   outline: none;
-  transition: border-color 0.15s ease;
-  box-sizing: border-box;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.field-input::placeholder {
+  color: #9db3b5;
 }
 
 .field-input:focus {
-  border-color: #2563eb;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-wash);
 }
 
 .field-input-error {
-  border-color: #ef4444;
+  border-color: #c0503f;
+}
+
+.field-input-error:focus {
+  box-shadow: 0 0 0 3px #fbe9e6;
 }
 
 textarea.field-input {
-  min-height: 110px;
+  min-height: 120px;
   resize: vertical;
+  line-height: 1.6;
 }
 
 .field-error {
   margin-top: 6px;
-  color: #ef4444;
+  color: var(--error-ink);
   font-size: 13px;
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { getContacts, deleteContact } from "../services/contactService";
 import type { Contact, SortField, SortOrder } from "../types/contact";
 
@@ -49,7 +49,7 @@ export function useContacts() {
       setTotalPages(response.totalPages);
     } catch (err) {
       console.error(err);
-      setError("Failed to load contacts. Please check your connection and try again.");
+      setError("Couldn't load queries. Check that the server is running, then try again.");
     } finally {
       setLoading(false);
     }
@@ -85,10 +85,16 @@ export function useContacts() {
     [fetchContacts]
   );
 
-  // useMemo: derived, cheap-but-not-free value recomputed only when its
-  // inputs change, rather than on every render (e.g. every keystroke in
-  // an unrelated field).
-  const isEmpty = useMemo(() => !loading && contacts.length === 0, [loading, contacts]);
+  // Deliberately NOT wrapped in useMemo: this is a single boolean comparison,
+  // so memoising it would cost more (storing the value, comparing deps) than
+  // simply recomputing it. useMemo is used in ContactTable instead, where the
+  // work being avoided -- compiling a RegExp per row -- is actually worth it.
+  const isEmpty = !loading && contacts.length === 0;
+
+  // True when the list is empty *because* of a search or filter, rather than
+  // because no one has submitted anything yet. Lets the empty state give the
+  // user the right advice.
+  const isFiltered = search.trim() !== "" || dateFilter !== "";
 
   return {
     contacts,
@@ -107,6 +113,7 @@ export function useContacts() {
     loading,
     error,
     isEmpty,
+    isFiltered,
     refetch: fetchContacts,
     handleDelete,
   };

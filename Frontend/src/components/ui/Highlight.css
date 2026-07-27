@@ -1,0 +1,7 @@
+.highlight {
+  background: #cfe6e1;
+  color: var(--teal-deep);
+  border-radius: 3px;
+  padding: 0 1px;
+  font-weight: 600;
+}

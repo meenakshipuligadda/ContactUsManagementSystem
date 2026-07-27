@@ -1,13 +1,12 @@
 .queries-page {
-  max-width: 1100px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 32px 20px 60px;
+  padding: 44px 24px 72px;
 }
 
 .queries-header h2 {
-  font-size: 24px;
-  color: #1e293b;
-  margin-bottom: 20px;
+  font-size: 30px;
+  margin-bottom: 24px;
 }
 
 .queries-toolbar {
@@ -16,25 +15,41 @@
   align-items: flex-end;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .queries-table-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow);
 }
 
 .view-details p {
-  margin-bottom: 10px;
-  line-height: 1.5;
+  margin-bottom: 12px;
+  line-height: 1.6;
   word-break: break-word;
 }
 
+.view-details p:last-child {
+  margin-bottom: 0;
+}
+
 @media (max-width: 640px) {
+  .queries-page {
+    padding: 28px 16px 48px;
+  }
+
   .queries-toolbar {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .queries-table-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
   }
 }

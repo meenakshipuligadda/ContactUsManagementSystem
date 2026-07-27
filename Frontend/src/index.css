@@ -1,10 +1,48 @@
+/* ---------------------------------------------
+   Design tokens
+   Palette is built around the teal used in the
+   project brief rather than a stock framework blue.
+   --------------------------------------------- */
+:root {
+  --ink: #102f34;
+  --ink-soft: #52757a;
+  --teal: #12706b;
+  --teal-deep: #0b524e;
+  --teal-wash: #e7f1ef;
+  --mist: #f5f8f7;
+  --paper: #ffffff;
+  --line: #dbe6e4;
+
+  --success-bg: #e4f1e8;
+  --success-ink: #1c5c33;
+  --error-bg: #fbe9e6;
+  --error-ink: #8f2c22;
+
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow: 0 1px 2px rgba(16, 47, 52, 0.04), 0 12px 32px rgba(16, 47, 52, 0.06);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-  background-color: #f8fafc;
-  color: #1e293b;
+  font-family: var(--font-body);
+  background-color: var(--mist);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
+}
+
+/* Visible keyboard focus everywhere, not just on hover */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

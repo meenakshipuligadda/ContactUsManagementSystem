@@ -1,5 +1,5 @@
 .contact-page {
-  padding: 40px 20px;
+  padding: 56px 20px 72px;
   display: flex;
   justify-content: center;
 }
@@ -7,28 +7,32 @@
 .contact-page-card {
   width: 100%;
   max-width: 520px;
-  background: #fff;
-  border-radius: 18px;
-  padding: 36px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow);
 }
 
 .contact-page-card h2 {
-  font-size: 26px;
-  color: #1e293b;
+  font-size: 28px;
   text-align: center;
 }
 
 .contact-page-subtitle {
   text-align: center;
-  color: #64748b;
-  margin-top: 8px;
-  margin-bottom: 24px;
-  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: 15px;
 }
 
 @media (max-width: 480px) {
+  .contact-page {
+    padding: 32px 16px 48px;
+  }
+
   .contact-page-card {
-    padding: 24px;
+    padding: 26px 22px;
   }
 }
