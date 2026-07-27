@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "your_password_here",
+    "database": "contact_us_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
