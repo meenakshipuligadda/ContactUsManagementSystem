@@ -1,187 +1,185 @@
-# Attendance Management System
+# Contact Us Management System
 
-A modern **Full Stack Attendance Management System** built using **React, TypeScript, Node.js, Express.js, MySQL, and Sequelize**. This application enables organizations to manage employee records efficiently through a clean and responsive web interface.
+A full stack **Contact Us Management System** built with **React, TypeScript, Node.js, Express.js, MySQL, and Sequelize**. Visitors can submit enquiries through a validated contact form, and submitted queries can be searched, filtered, sorted, edited, and deleted through a responsive management interface.
 
 ---
 
 ## Features
 
-- Employee Registration
-- View All Employees
-- Update Employee Information
-- Delete Employee Records
-- Search Employees
-- Responsive User Interface
-- RESTful API Integration
-- MySQL Database
-- Sequelize ORM
-- CORS Enabled
+- Responsive landing page with clean navigation
+- Contact form with client-side validation (required fields + email format)
+- Create, read, update, and delete contact submissions
+- Same form reused for both create and edit
+- Search by name and email
+- Filter by submission date
+- Sort by name and created date
+- Pagination (5 records per page)
+- Confirmation dialog before delete
+- Loading, success, error, and empty states
+- Enter key submits the form
+- Mobile responsive layout (table collapses into cards below 640px)
+- REST API with server-side search, sort, and pagination
+- Service layer abstraction for all API calls
 
 ---
 
 ## Tech Stack
 
-### Frontend
-
-- React
-- TypeScript
-- Vite
-- Axios
-- HTML5
-- CSS3
-
-### Backend
-
-- Node.js
-- Express.js
-- Sequelize ORM
-- MySQL
-- CORS
-
-### Tools
-
-- Visual Studio Code
-- MySQL Workbench
-- Postman
-- Git
-- GitHub
+**Frontend:** React, TypeScript, Vite, React Router, Axios, CSS3
+**Backend:** Node.js, Express.js, Sequelize ORM, MySQL, CORS
+**Tools:** VS Code, MySQL Workbench, Postman, Git, GitHub
 
 ---
 
 ## Project Structure
 
 ```
-AttendanceManagementSystem
+ContactUsManagementSystem
 │
-├── frontend
+├── Frontend
 │   ├── public
-│   ├── src
-│   │   ├── components
-│   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   └── ...
-│   ├── package.json
-│   └── vite.config.ts
+│   └── src
+│       ├── components
+│       │   ├── ui              # Reusable primitives: Button, Input, Modal, Alert, Spinner, EmptyState
+│       │   ├── layout          # Navbar
+│       │   ├── ContactForm.tsx
+│       │   ├── ContactTable.tsx
+│       │   ├── SearchBar.tsx
+│       │   ├── FilterSection.tsx
+│       │   └── Pagination.tsx
+│       ├── pages               # Home, ContactPage, QueriesPage
+│       ├── services            # api.ts (axios instance), contactService.ts
+│       ├── hooks               # useContacts.ts
+│       ├── types               # contact.ts
+│       ├── App.tsx
+│       └── main.tsx
 │
-├── backend
-    ├── config
-    ├── models
-    ├── routes
-    ├── migrations
-    ├── app.js
-    ├── package.json
-    └── ...
-
----
-
-## Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/meenakshipuligadda/AttendanceManagementSystem.git
-```
-
-### 2. Navigate to the project
-
-```bash
-cd AttendanceManagementSystem
+└── Backend
+    ├── config                  # Sequelize database config
+    ├── models                  # Contact model
+    ├── routes                  # contactRoutes.js
+    ├── migrations              # Contacts table migration
+    └── app.js
 ```
 
 ---
 
-## Frontend Setup
+## Setup
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend runs at:
-
-```
-http://localhost:5173
-```
-
----
-
-## Backend Setup
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-Backend runs at:
-
-```
-http://localhost:3001
-```
-
----
-
-## Database Setup
-
-Create a MySQL database.
-
-Example:
+### 1. Database
 
 ```sql
-CREATE DATABASE attendance_management;
+CREATE DATABASE contact_us_db;
 ```
 
-Update your database configuration inside:
+Update credentials in `Backend/config/config.json` if yours differ.
 
-```
-backend/config/config.json
+### 2. Backend
+
+```bash
+cd Backend
+npm install
+npx sequelize-cli db:migrate
+npm run dev
 ```
 
-Run the application after connecting the database.
+Runs at `http://localhost:3001`
+
+### 3. Frontend
+
+```bash
+cd Frontend
+npm install
+npm run dev
+```
+
+Runs at `http://localhost:5173`
 
 ---
 
 ## REST API Endpoints
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
-| GET | /users | Get all employees |
-| POST | /users | Register employee |
-| PUT | /users/:id | Update employee |
-| DELETE | /users/:id | Delete employee |
+|--------|----------|-------------|
+| POST | /api/contacts | Create a contact |
+| GET | /api/contacts | Get all contacts (supports search, filter, sort, pagination) |
+| GET | /api/contacts/:id | Get a single contact by ID |
+| PUT | /api/contacts/:id | Update a contact |
+| DELETE | /api/contacts/:id | Delete a contact |
+
+### Query parameters on `GET /api/contacts`
+
+| Parameter | Values | Description |
+|-----------|--------|-------------|
+| `search` | any text | Matches against name or email |
+| `date` | `YYYY-MM-DD` | Returns contacts created on that day |
+| `sortBy` | `name`, `createdAt` | Field to sort by |
+| `order` | `ASC`, `DESC` | Sort direction |
+| `page` | number | Page number (default 1) |
+| `limit` | number | Records per page (default 5) |
+
+Example: `GET /api/contacts?search=meena&sortBy=name&order=ASC&page=1&limit=5`
+
+Response shape:
+
+```json
+{
+  "data": [ ... ],
+  "total": 12,
+  "page": 1,
+  "totalPages": 3
+}
+```
 
 ---
 
-## Future Enhancements
+## Database Design
 
-- User Authentication (Login & Logout)
-- JWT Authentication
-- Role-Based Access Control (Admin/User)
-- Attendance Tracking
-- Employee Dashboard
-- Reports & Analytics
-- Export Data to Excel/PDF
-- Email Notifications
-- Profile Management
-- Cloud Deployment (AWS)
+**Table:** `Contacts`
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | INTEGER | Primary key, auto-increment |
+| name | STRING | Required |
+| email | STRING | Required |
+| message | TEXT | Required, `TEXT` rather than `VARCHAR` to allow long messages |
+| createdAt | DATE | Managed automatically by Sequelize |
+| updatedAt | DATE | Managed automatically by Sequelize |
+
+`createdAt` powers both the date filter and the created-date sort, so timestamps are functional here rather than just audit metadata.
+
+**Scalability considerations:** adding an index on `createdAt` and `email` would keep filtering and searching fast as the table grows. Search currently uses `LIKE`, which is fine at this scale; full-text search would be the next step for larger datasets. Pagination is handled at the database level via `LIMIT`/`OFFSET`, so response size stays constant regardless of total record count.
 
 ---
 
-## Learning Outcomes
+## Architecture Notes
 
-This project helped me gain practical experience in:
+**Service layer** — components never call `axios` directly. All HTTP calls live in `services/contactService.ts`, with the base URL configured once in `services/api.ts`. This keeps API details out of the UI and makes the backend easy to swap or mock.
 
-- React with TypeScript
-- Component-based UI development
-- REST API development
-- CRUD Operations
-- Express.js
-- MySQL Database Design
-- Sequelize ORM
-- Axios API Integration
-- Git & GitHub Version Control
-- Debugging Frontend and Backend Applications
+**Custom hook** — `useContacts.ts` owns all list state (search, date filter, sort, pagination, loading, error) so `QueriesPage` only handles rendering.
+
+**Server-side data handling** — search, filtering, sorting, and pagination all happen in the database query rather than in the browser. The frontend only ever holds one page of results, so the app doesn't slow down as the table grows.
+
+**React hooks used:**
+
+| Hook | Where | Why |
+|------|-------|-----|
+| `useState` | throughout | Local component and form state |
+| `useEffect` | `useContacts`, `ContactPage` | Fetch data when query parameters change; load a contact when entering edit mode |
+| `useCallback` | `useContacts`, `QueriesPage` | Keeps `fetchContacts` stable so the effect doesn't loop; keeps row handlers stable so memoized table rows don't re-render |
+| `useMemo` | `useContacts` | Derives the empty state only when its inputs change |
+| `useRef` | `useContacts`, `ContactForm` | Holds the search debounce timer without triggering re-renders; focuses the name input on mount |
+
+---
+
+## Possible Future Enhancements
+
+- Admin authentication for the Queries page
+- Email notification on new submission
+- Export submissions to CSV
+- Database indexes on frequently queried columns
+- Move database credentials to environment variables
+- Cloud deployment
 
 ---
 
@@ -192,10 +190,3 @@ This project helped me gain practical experience in:
 Master's in Computer Information Systems
 
 GitHub: https://github.com/meenakshipuligadda
-
-LinkedIn: 
-
----
-
-
-This project is created for educational and portfolio purposes.
